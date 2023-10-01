@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import SymptomeLabel from './SymptomeLabel';
 import Prompt from './Prompt';
+import axios from 'axios';
+
 
 export default function Input() {
 
@@ -23,9 +25,11 @@ export default function Input() {
     setLabels(updatedLabels);
   };
 
-  const buttonDiagnosisClick = () => {
+  const buttonDiagnosisClick = async () => {
     const prompt = new Prompt(labels);
-    console.log(prompt.generatePrompt());
+    console.log(prompt.getResponse());
+    setLabels([]);
+    setInputText('');
   };
 
   return (
