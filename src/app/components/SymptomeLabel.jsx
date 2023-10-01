@@ -4,15 +4,15 @@ import React from 'react';
 
 export default function SymptomeLabel(props) {
   const handleEraseClick = () => {
-    if (props.eraseLabel) {
-      props.eraseLabel();
+    if (props.eraseInputLabel) {
+      props.eraseInputLabel();
     }
   };
 
   return (
     <label className="symptome-label">
       {props.symptome}
-      {props.eraseLabel && (
+      {props.eraseInputLabel && (
         <span
           className="erase-label"
           onClick={handleEraseClick}

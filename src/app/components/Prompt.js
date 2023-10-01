@@ -11,7 +11,7 @@ class Prompt {
   }
   generatePrompt() {
     const symptomeList = this.symptomes.join(', ');
-    return `Am următoarele simptome: ${symptomeList}. Răspund cu cele 5 cauze cele mai comune în acest format (PROBLEM: posibila boala, DESCRIPTION: descriere a bolii < 10 cuvinte, SEVERITY: gradul de severitate(usor, moderat, sever), ADVICE: ce sa faci in situatia asta. ORICE AR FII DA-MI INFORMATIILE IN FORMATUL PREZENTAT. elementele scrise cu litere mari sa imi apara exact asa si in raspuns.`;
+    return `Am următoarele simptome: ${symptomeList}. Răspunde cu 5 cauze cele mai comune în acest format asemenea unui JSON(FIECARE CAUZA SA AIBA UN JSON SEPARAT, jsonurile separate prin virgula si bagate in paranteze patrate). {PROBLEMA: [cauza gasita de tine], DESCRIERE: [descriere scurta de max 10 cuvinte a problemei], SEVERITATE: [usor/moderat/sever], SFAT:[sfatul propus de tine]}ORICE AR FII DA-MI INFORMATIILE IN FORMATUL PREZENTAT. orice ar fii, rezultatul sa fie ca un text care arata ca un JSON si sa poate fii format in JSON in javascript prin JSON.parse. da-mi direct doar rezultatul, nu spune nimic pe langa`;
   }
   async getResponse() {
     const info = this.generatePrompt();
@@ -30,25 +30,17 @@ class Prompt {
         }
       );
       console.log(response.data.choices[0].message.content);
-      const inputString = response.data.choices[0].message.content;
+      var inputString = response.data.choices[0].message.content;
 
-      const sections = inputString.trim().split('\n\n');
-      const jsonArray = [];
-
-      for (const section of sections) {
-        const lines = section.split('\n');
-        const jsonObject = {};
-
-        for (const line of lines) {
-          const [key, value] = line.split(': ');
-          jsonObject[key] = value;
-        }
-
-        jsonArray.push(jsonObject);
+      //sometimes, the ai dosent add the square brakets
+      if (inputString[0] !== '[') {
+        inputString = "[" + inputString + "]";
       }
       
-      console.log(jsonArray);
-      return jsonArray;
+      console.log(inputString);
+      const JSONInput = JSON.parse(inputString);  
+      console.log(JSONInput);
+      return JSONInput;
 
     } catch (error) {
       console.error('Error sending POST request to OpenAI API:', error);
