@@ -56,6 +56,7 @@ export default function Home() {
 
   return (
     <div> 
+      <img id="logo-image" src="logo.svg"></img>
       <div>
         <div className="symptome-input">
           <input
@@ -66,9 +67,9 @@ export default function Home() {
           />
         </div>
         <div className="buttons-container">
-          <button className="white-button" onClick={buttonAddClick}>Adauga</button>
-          <button className="white-button" onClick={buttonDiagnosisClick}> Diagnostic </button>
-          <button  className="white-button" onClick={buttonResetClick}> Reseteaza </button>
+          <button className="red-button" onClick={buttonAddClick}>Adauga</button>
+          <button className="red-button" onClick={buttonDiagnosisClick}> Diagnostic </button>
+          <button  className="red-button" onClick={buttonResetClick}> Reseteaza </button>
         </div>
       </div>
       <div className="main-container">

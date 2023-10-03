@@ -11,7 +11,6 @@ export default function SymptomeLabel(props) {
 
   return (
     <label className="symptome-label">
-      {props.symptome}
       {props.eraseInputLabel && (
         <span
           className="erase-label"
@@ -20,6 +19,7 @@ export default function SymptomeLabel(props) {
           &#10006;
         </span>
       )}
+      {props.symptome}
     </label>
   );
 }
