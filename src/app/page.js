@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import SymptomeLabel from './components/SymptomeLabel';
 import Prompt from './components/Prompt';
 import axios from 'axios';
+import OutputLabel from './components/OutputLabel';
 
 export default function Home() {
   const [inputText, setInputText] = useState('');
@@ -84,13 +85,15 @@ export default function Home() {
         </div>
         <div className="half-container">
         {outputLabels.map((label, index) => (
-          <SymptomeLabel
+          <OutputLabel
             key={index}
-            symptome={label.PROBLEMA}
-            eraseInputLabel={() => eraseInputLabel(label)}
+            problem={label.PROBLEMA}
+            severity={label.SEVERITATE}
+            description={label.DESCRIERE}
+            advice={label.SFAT}
           />
         ))}
-        {isLoading && <div className="loading-animation">Loading...</div>}
+        {isLoading && <div className="loader"><div ckassName="spinner"></div></div>}
         </div>
         
       </div>  
