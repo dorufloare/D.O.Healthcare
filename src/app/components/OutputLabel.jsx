@@ -23,7 +23,7 @@ export default function OutputLabel(props) {
   }
 
   const labelStyle = {
-    height: expanded ? "auto" : "40px", 
+    height: expanded ? "auto" : "auto",
   };
 
   const textContainerStyle = {
@@ -34,8 +34,8 @@ export default function OutputLabel(props) {
     <div className="output-label" style={labelStyle}>
       <div onClick={toggleExpansion}>
         <img className="severity-sign" src={warningSign} alt="Severity Sign" />
-        {props.problem}
-        {expanded ? " ▲" : " ▼"}
+        <span>{props.problem}</span>
+        <span className="expand-arrow">{expanded ? " ▲" : " ▼"}</span>
       </div>
       <div className="expanded-content" style={textContainerStyle}>
         <p className="description-text">{props.description}</p>

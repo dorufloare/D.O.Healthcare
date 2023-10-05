@@ -1,12 +1,26 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SymptomeLabel from './components/SymptomeLabel';
 import Prompt from './components/Prompt';
 import axios from 'axios';
 import OutputLabel from './components/OutputLabel';
+import NavBar from './components/NavMenu';
 
 export default function Home() {
+  const [username, setUsername] = useState('');
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const getUser = () => {
+    axios({
+      method: "get",
+      withCredentials: true,
+      url: "http://localhost:3001/getUser"
+    }).then(res=>{setUsername(res.data.username)}).catch(err =>console.log(err));
+  };
+
   const [inputText, setInputText] = useState('');
   const [inputLabels, setInputLabels] = useState([]);
   const [outputLabels, setOutputLabels] = useState([]);
@@ -56,7 +70,10 @@ export default function Home() {
   }
 
   return (
-    <div> 
+ 
+    <div>    
+      {username}
+      <NavBar username={username}/>
       <img id="logo-image" src="logo.svg"></img>
       <div>
         <div className="symptome-input">
@@ -93,11 +110,9 @@ export default function Home() {
             advice={label.SFAT}
           />
         ))}
-        {isLoading && <div className="loader"><div ckassName="spinner"></div></div>}
+        {isLoading && <div className="loader"><div className="spinner"></div></div>}
         </div>
-        
       </div>  
-
     </div>
   );
 }
