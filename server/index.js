@@ -73,10 +73,163 @@ app.post('/logout', function(req, res, next){
     res.redirect('/');
   });
 });
+
+app.put('/updateExcluded/:id/:excluded', (req, res) => {
+  const { id, excluded } = req.params;
+  console.log("EXCLUDE " + id + " " + excluded);
+  const query = `
+    UPDATE account
+    SET excluded = ?
+    WHERE id = ?;
+  `;
+
+  db.query(query, [excluded, id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Failed to update the excluded column' });
+    }
+
+    return res.status(200).json({ message: 'Excluded column updated successfully' });
+  });
+});
+
+app.put('/updateAge/:id/:age', (req, res) => {
+  const { id, age } = req.params;
+  console.log("AGE " + id + " " + age);
+  const query = `
+    UPDATE account
+    SET age = ?
+    WHERE id = ?;
+  `;
+
+  db.query(query, [age, id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Failed to update the age column' });
+    }
+
+    return res.status(200).json({ message: 'Age column updated successfully' });
+  });
+});
+
+app.put('/updateHeight/:id/:height', (req, res) => {
+  const { id, height } = req.params;
+  console.log("height " + id + " " + height);
+  const query = `
+    UPDATE account
+    SET height = ?
+    WHERE id = ?;
+  `;
+
+  db.query(query, [height, id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Failed to update the height column' });
+    }
+
+    return res.status(200).json({ message: 'height column updated successfully' });
+  });
+});
+
+app.put('/updateWeight/:id/:weight', (req, res) => {
+  const { id, weight } = req.params;
+  console.log("weight " + id + " " + weight);
+  const query = `
+    UPDATE account
+    SET weight = ?
+    WHERE id = ?;
+  `;
+
+  db.query(query, [weight, id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Failed to update the weight column' });
+    }
+
+    return res.status(200).json({ message: 'weight column updated successfully' });
+  });
+});
+
+
 app.get("/getUser", (req, res) => {
   res.send(req.user);
 });
 
+app.get('/getUserAge/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'SELECT age FROM account WHERE id = ?';
+
+  db.query(query, [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Failed to retrieve age' });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const age = result[0].age;
+    return res.status(200).json({ age });
+  });
+});
+
+app.get('/getUserHeight/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'SELECT height FROM account WHERE id = ?';
+
+  db.query(query, [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Failed to retrieve height' });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const height = result[0].height;
+    return res.status(200).json({ height });
+  });
+});
+
+app.get('/getUserWeight/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'SELECT weight FROM account WHERE id = ?';
+
+  db.query(query, [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Failed to retrieve weight' });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const weight = result[0].weight;
+    return res.status(200).json({ weight });
+  });
+});
+
+app.get('/getUserExcluded/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'SELECT excluded FROM account WHERE id = ?';
+
+  db.query(query, [id], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: 'Failed to retrieve excluded' });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const excluded = result[0].excluded;
+    return res.status(200).json({ excluded });
+  });
+});
 
 app.listen(3001, () => {
   console.log("Server started on port 3001");

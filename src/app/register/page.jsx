@@ -18,12 +18,17 @@ export default function Register() {
       },
       withCredentials: true,
       url: "http://localhost:3001/register"
-    }).then((res) => console.log(res))
+    }).then((res) => {
+      console.log(res);
+      window.location.replace('http://localhost:3000');
+    })
       .catch((err) => console.log(err));
   };
 
   return (
     <div>
+      <NavBar />
+      <div className="auth-div">
       <h1>Inregistrare</h1>
       <input 
         type="text"
@@ -39,7 +44,8 @@ export default function Register() {
         onChange={e => setRegisterPassword(e.target.value)}
       ></input>
 
-      <button onClick={register}>Inregistreaza-te</button>
+      <button className="red-button" onClick={register}>Inregistreaza-te</button>
+      </div>
     </div>
   );
 }

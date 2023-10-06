@@ -70,11 +70,9 @@ export default function Home() {
   }
 
   return (
- 
     <div>    
-      {username}
       <NavBar username={username}/>
-      <img id="logo-image" src="logo.svg"></img>
+      <img className="logo-image" src="logo.svg"></img>
       <div>
         <div className="symptome-input">
           <input

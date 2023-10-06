@@ -9,24 +9,26 @@ export default function NavBar(props) {
       method: "post",
       withCredentials: true,
       url: "http://localhost:3001/logout"
-    }).then(res => console.log(res)).catch(err => console.log(err));
+    }).then(res => {console.log(res);window.location.reload();}).catch(err => console.log(err));
   };
 
   return (
     <div className="header-div">
-      {!props.username && 
-      <>
-      <Link href="/login"><h2>Login</h2></Link>
-      <Link href="/register"><h2>Register</h2></Link>
-      </>
-      }   
-      {props.username && 
-        <>
-          <h2 onClick={logout} style={{ cursor: "pointer" }}>Logout</h2>
-          <Link href="/"><h2>Profile</h2></Link>
-        </>
-      }
-      
+      <a href="/"><img src="logo.svg" className="header-logo"></img></a>
+      <span className="header-links">
+        {!props.username && 
+          <>
+            <Link href="/login"><h2>Login</h2></Link>
+            <Link href="/register"><h2>Inregistrare</h2></Link>
+          </>
+        }   
+        {props.username && 
+          <>
+            <Link href="/" onClick={logout} ><h2>Logout</h2></Link>
+            <Link href="/profile"><h2>Profil</h2></Link>
+          </>
+        }
+      </span>
     </div>
   );
 }
