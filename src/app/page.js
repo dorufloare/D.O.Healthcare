@@ -9,6 +9,8 @@ import NavBar from './components/NavMenu';
 
 export default function Home() {
   const [username, setUsername] = useState('');
+  const [age, setAge] = useState();
+  
   useEffect(() => {
     getUser();
   }, []);
@@ -18,7 +20,14 @@ export default function Home() {
       method: "get",
       withCredentials: true,
       url: "http://localhost:3001/getUser"
-    }).then(res=>{setUsername(res.data.username)}).catch(err =>console.log(err));
+    }).then(res=>{
+      setUsername(res.data.username);
+      if (res.data.age) {
+        setAge(res.data.age);
+      } else {
+        setAge(25);
+      }
+    }).catch(err =>console.log(err));
   };
 
   const [inputText, setInputText] = useState('');
@@ -50,7 +59,7 @@ export default function Home() {
     setIsLoading(true); 
 
     try {
-      const prompt = new Prompt(inputLabels);
+      const prompt = new Prompt(inputLabels,age);
       const response = await prompt.getResponse();
       console.log(response);
       setOutputLabels(response);

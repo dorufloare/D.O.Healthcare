@@ -1,9 +1,8 @@
 "use client"
 
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "../components/NavMenu";
-
 
 
 
@@ -79,8 +78,10 @@ export default function Profile() {
     updateHeight();
     updateWeight();
   }
-
-  getUser();
+  useEffect(() => {
+    getUser();
+  }, []);
+  
   return (
     <div>
       <NavBar  username={username}/>
